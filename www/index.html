@@ -41,7 +41,7 @@
             var initStartTime = performance.now();
 
             var sync = ContentSync.sync({
-                copyRootApp: true,
+                copyCordovaAssets: true,
                 type: "local",
                 id: "synced"
             });
@@ -79,7 +79,7 @@
                     return console.error("Error! " + JSON.stringify(error));
                 }
 
-                navigateToPage(localPath + "/home.html");
+                navigateToPage("home.html");
             });
         }, false);
     </script>

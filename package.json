@@ -4,15 +4,15 @@
   "displayName": "helloworld",
   "cordova": {
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ],
     "plugins": {
       "phonegap-plugin-contentsync": {}
     }
   },
   "dependencies": {
-    "cordova-android": "git+https://github.com/apache/cordova-android.git#6.2.2",
+    "cordova-android": "^6.3.0",
     "cordova-ios": "^4.5.4",
     "phonegap-plugin-contentsync": "^1.4.1"
   }

@@ -94,7 +94,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <engine name="android" spec="git+https://github.com/apache/cordova-android.git#6.2.2" />
+    <engine name="ios" spec="^4.5.4" />
     <plugin name="phonegap-plugin-contentsync" spec="^1.4.1" />
-    <engine name="ios" spec="~4.5.4" />
+    <engine name="android" spec="~6.3.0" />
 </widget>
