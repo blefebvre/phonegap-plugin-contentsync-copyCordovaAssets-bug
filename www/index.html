@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' gap:;img-src 'self' content: blob: file: data:;script-src * 'unsafe-inline' 'unsafe-eval';">
+    
+    <title>Initializing...</title>
+</head>
+
+<body>
+    <h1>Initializing...</h1>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
+         var beginAppInitialization = function(callback) {
+            var initStartTime = performance.now();
+
+            var sync = ContentSync.sync({
+                copyRootApp: true,
+                type: "local",
+                id: "synced"
+            });
+
+            sync.on('progress', function(data) {
+                console.log("copyRootApp progress: " + data.progress);
+            });
+
+            sync.on('error', function(e) {
+                console.error("copyRootApp error: " + JSON.stringify(e));
+                return callback(e);
+            });
+
+            sync.on('complete', function(data) {
+                var initFinishTime = performance.now();
+
+                // We now have initialized content at data.localPath
+                console.log("copyRootApp complete! content available at path: " + data.localPath);
+                console.log("copyRootApp took: " + Math.round(initFinishTime - initStartTime) + " ms total to complete.");
+                
+                // Return path to the initialized content
+                return callback(null, data.localPath);
+            });
+        };
+
+        // Navigate the app to the provided pageHref
+        var navigateToPage = function(pageHref) {
+            console.log("Navigating to page: " + pageHref);
+            window.location.replace(pageHref);
+        };
+
+        document.addEventListener("deviceready", function() {
+            beginAppInitialization(function callback(error, localPath) {
+                if (error) {
+                    return console.error("Error! " + JSON.stringify(error));
+                }
+
+                navigateToPage(localPath + "/home.html");
+            });
+        }, false);
+    </script>
+</body>
+
+</html>
